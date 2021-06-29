@@ -102,7 +102,7 @@ def main():
     scores = []
     feature_set = []
     with torch.no_grad():
-        for batch_idx, (input, _) in enumerate(loader):
+        for batch_idx, (input, _) in enumerate(loader[:10]):
             input = input.cuda()
             labels, features = model(input)
             topk = labels.topk(k)[1]
