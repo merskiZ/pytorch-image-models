@@ -475,10 +475,11 @@ class EfficientNet(nn.Module):
 
     def forward(self, x):
         x = self.forward_features(x)
-        x = self.global_pool(x)
+        features = self.global_pool(x)
+
         if self.drop_rate > 0.:
-            x = F.dropout(x, p=self.drop_rate, training=self.training)
-        return self.classifier(x)
+            x = F.dropout(features, p=self.drop_rate, training=self.training)
+        return self.classifier(x), features
 
 
 class EfficientNetFeatures(nn.Module):
