@@ -479,7 +479,7 @@ class EfficientNet(nn.Module):
 
         if self.drop_rate > 0.:
             x = F.dropout(features, p=self.drop_rate, training=self.training)
-        return self.classifier(x), features
+        return self.classifier(features), features
 
 
 class EfficientNetFeatures(nn.Module):
