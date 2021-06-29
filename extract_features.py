@@ -101,12 +101,8 @@ def main():
     topk_ids = []
     scores = []
     feature_set = []
-    counter = 0
     with torch.no_grad():
         for batch_idx, (input, _) in enumerate(loader):
-            counter += 1
-            if counter > 10:
-                break
             input = input.cuda()
             labels, features = model(input)
             topk = labels.topk(k)[1]
@@ -132,11 +128,12 @@ def main():
     np.save(open(os.path.join(args.output_dir, 'scores.npy'), 'wb'), scores)
     np.save(open(os.path.join(args.output_dir, 'feature_set.npy'), 'wb'), feature_set)
 
-    # with open(os.path.join(args.output_dir, './topk_ids.csv'), 'w') as out_file:
-    #     filenames = loader.dataset.filenames(basename=True)
-    #     for filename, label in zip(filenames, topk_ids):
-    #         out_file.write('{0},{1}\n'.format(
-    #             filename, ','.join([ str(v) for v in label])))
+    with open(os.path.join(args.output_dir, './topk_ids.csv'), 'w') as out_file:
+        filenames = loader.dataset.filenames(basename=True)
+        for filename, label in zip(filenames, topk_ids):
+            out_file.write('ImageId,label_1,label_2,label_3,label_4,label_5\n')
+            out_file.write('{0},{1}\n'.format(
+                filename, ','.join([str(v) for v in label])))
 
 
 if __name__ == '__main__':
