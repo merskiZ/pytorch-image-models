@@ -101,8 +101,12 @@ def main():
     topk_ids = []
     scores = []
     feature_set = []
+    counter = 0
     with torch.no_grad():
-        for batch_idx, (input, _) in enumerate(loader[:10]):
+        for batch_idx, (input, _) in enumerate(loader):
+            counter += 1
+            if counter > 10:
+                break
             input = input.cuda()
             labels, features = model(input)
             topk = labels.topk(k)[1]
