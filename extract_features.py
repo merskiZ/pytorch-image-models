@@ -108,7 +108,7 @@ def main():
             topk = labels.topk(k)[1]
             topk_ids.append(topk.cpu().numpy())
             scores.append(labels.cpu().numpy())
-            feature_set.append(features.cpu.numpy())
+            feature_set.append(features.cpu().numpy())
 
             # measure elapsed time
             batch_time.update(time.time() - end)

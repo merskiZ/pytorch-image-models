@@ -344,17 +344,17 @@ class VisionTransformer(nn.Module):
             return x[:, 0], x[:, 1]
 
     def forward(self, x):
-        x = self.forward_features(x)
+        features = self.forward_features(x)
         if self.head_dist is not None:
-            x, x_dist = self.head(x[0]), self.head_dist(x[1])  # x must be a tuple
+            x, x_dist = self.head(features[0]), self.head_dist(features[1])  # x must be a tuple
             if self.training and not torch.jit.is_scripting():
                 # during inference, return the average of both classifier predictions
                 return x, x_dist
             else:
                 return (x + x_dist) / 2
         else:
-            x = self.head(x)
-        return x
+            x = self.head(features)
+        return x, features
 
 
 def _init_vit_weights(module: nn.Module, name: str = '', head_bias: float = 0., jax_impl: bool = False):

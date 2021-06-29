@@ -308,9 +308,9 @@ class Visformer(nn.Module):
 
     def forward(self, x):
         x = self.forward_features(x)
-        feat = self.global_pool(x)
-        x = self.head(feat)
-        return x, feat
+        x = self.global_pool(x)
+        x = self.head(x)
+        return x
 
 
 def _create_visformer(variant, pretrained=False, default_cfg=None, **kwargs):
