@@ -130,8 +130,8 @@ def main():
 
     with open(os.path.join(args.output_dir, './topk_ids.csv'), 'w') as out_file:
         filenames = loader.dataset.filenames(basename=True)
+        out_file.write('ImageId,label_1,label_2,label_3,label_4,label_5\n')
         for filename, label in zip(filenames, topk_ids):
-            out_file.write('ImageId,label_1,label_2,label_3,label_4,label_5\n')
             out_file.write('{0},{1}\n'.format(
                 filename, ','.join([str(v) for v in label])))
 
